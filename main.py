@@ -105,15 +105,12 @@ class MainWindow(QWidget):
         self.main_widget.setLayout(main_layout)
 
     def init_navigation_buttons(self, parent_widget):
-        # Кнопка для перехода на предыдущую страницу
         prev_button = QPushButton("Предыдущая", parent_widget)
         prev_button.clicked.connect(self.go_to_previous_page)
 
-        # Кнопка для перехода на следующую страницу
         next_button = QPushButton("Следующая", parent_widget)
         next_button.clicked.connect(self.go_to_next_page)
 
-        # Горизонтальный лэйаут для размещения кнопок
         nav_layout = QHBoxLayout()
         nav_layout.addWidget(prev_button)
         nav_layout.addWidget(next_button)
@@ -146,7 +143,6 @@ class MainWindow(QWidget):
         login_button.setStyleSheet(self.button_stylesheet())
         login_button.clicked.connect(self.verify_doctor_credentials)
 
-        # Кнопка "Назад"
         back_button = QPushButton("Назад", self.doctor_login_widget)
         back_button.setFixedSize(200, 50)
         back_button.setStyleSheet(self.button_stylesheet())
@@ -173,7 +169,6 @@ class MainWindow(QWidget):
         layout.addStretch()
         layout.setAlignment(Qt.AlignHCenter)
 
-        # Кнопка "Назад"
         back_button = QPushButton("Назад", self.doctor_main_widget)
         back_button.setFont(QFont("Arial", 16))
         back_button.setStyleSheet(self.button_stylesheet())
@@ -182,10 +177,8 @@ class MainWindow(QWidget):
 
         self.init_theme_button(self.doctor_main_widget)
         
-        # Добавляем кнопку "Назад" в layout
         layout.addWidget(back_button)
 
-        # Добавляем layout к виджету
         self.doctor_main_widget.setLayout(layout)
 
 
@@ -248,12 +241,8 @@ class MainWindow(QWidget):
     
     def init_patient_login_page(self):
         self.patient_login_widget = QWidget()  # Создаем виджет для страницы входа пациента
-
-        # Вертикальный лэйаут для страницы входа пациента
         login_layout = QVBoxLayout(self.patient_login_widget)
         login_layout.setAlignment(Qt.AlignCenter)
-
-        # Вертикальный лэйаут для элементов ввода
         form_layout = QFormLayout()
         self.patient_username_input = QLineEdit()
         self.patient_password_input = QLineEdit()
@@ -261,7 +250,6 @@ class MainWindow(QWidget):
         form_layout.addRow("Username:", self.patient_username_input)
         form_layout.addRow("Password:", self.patient_password_input)
 
-        # Добавляем вертикальный лэйаут с элементами ввода в общий вертикальный лэйаут
         login_layout.addLayout(form_layout)
 
         login_button = QPushButton("Login", self.patient_login_widget)
@@ -270,8 +258,6 @@ class MainWindow(QWidget):
         login_button.clicked.connect(self.verify_patient_credentials)
 
         login_layout.addWidget(login_button)
-
-        # Кнопка "Назад"
         back_button = QPushButton("Назад", self.patient_login_widget)
         back_button.setFixedSize(login_button.size())  # Устанавливаем размер кнопки "Назад" таким же, как у кнопки "Login"
         back_button.setStyleSheet(self.button_stylesheet())
@@ -285,7 +271,6 @@ class MainWindow(QWidget):
         username = self.patient_username_input.text()
         password = self.patient_password_input.text()
 
-        # Простейшая проверка логина и пароля (замените на свою логику проверки)
         if username == "patient" and password == "patient":
             self.stacked_widget.setCurrentWidget(self.patient_main_widget)
         else:
@@ -333,11 +318,9 @@ class MainWindow(QWidget):
         layout.addStretch()
         layout.setAlignment(Qt.AlignHCenter)
 
-        # Кнопка смены темы
         self.init_theme_button(self.patient_main_widget)
         layout.addWidget(self.theme_button)
 
-        # Кнопка "Назад"
         back_button = QPushButton("Назад", self.patient_main_widget)
         back_button.setFont(QFont("Arial", 16))
         back_button.setStyleSheet(self.button_stylesheet())
@@ -376,7 +359,7 @@ class MainWindow(QWidget):
             target_time = QDateTime(now.date(), QTime.fromString(time, "hh:mm:ss"))
             interval = target_time.toMSecsSinceEpoch() - now.toMSecsSinceEpoch()
             if interval < 0:
-                interval += 86400000  # Добавляем 24 часа в миллисекундах, если время прошло
+                interval += 86400000
             timer.start(interval)
 
     def show_reminder(self, med_name):
@@ -387,7 +370,7 @@ class MainWindow(QWidget):
         layout.addWidget(label)
         reminder.setLayout(layout)
         reminder.show()
-        QTimer.singleShot(10000, reminder.close)  # Закрыть напоминание через 10 секунд
+        QTimer.singleShot(10000, reminder.close)
 
     def init_theme_button(self, parent_widget):
         self.theme_button = QPushButton(parent_widget)
@@ -430,11 +413,9 @@ class MainWindow(QWidget):
 
         self.setPalette(palette)
 
-        # Set text color for input fields to always be black
         input_field_palette = QPalette()
         input_field_palette.setColor(QPalette.Text, QColor(0, 0, 0))  # Text color is black
 
-        # Apply the input field palette to all relevant input widgets
         input_widgets = (
             self.findChildren(QLineEdit) +
             self.findChildren(QTextEdit) +
